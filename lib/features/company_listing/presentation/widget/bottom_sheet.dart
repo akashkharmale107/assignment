@@ -12,8 +12,7 @@ class _CompanyDetailBottomSheetState extends State<CompanyDetailBottomSheet> {
   @override
   Widget build(BuildContext context) => Center(
       child: SizedBox(
-          height: 800,
-          child: Stack(alignment: Alignment.bottomCenter, children: [
+          child: Stack(clipBehavior: Clip.none,fit: StackFit.expand,alignment: Alignment.bottomCenter, children: [
             Container(
               decoration: const BoxDecoration(
                   color: Colors.white,
@@ -40,7 +39,7 @@ class _CompanyDetailBottomSheetState extends State<CompanyDetailBottomSheet> {
                         onPressed: () {
                           setState(() {
                             if(starColor==Colors.grey.shade600){
-                              starColor=Colors.yellow;}
+                              starColor=Color.fromRGBO(255, 196, 0, 1.0);}
                             else{
                               starColor=Colors.grey.shade600;
                             }
@@ -83,6 +82,7 @@ class _CompanyDetailBottomSheetState extends State<CompanyDetailBottomSheet> {
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
                   const SizedBox(height: 16),
+                  Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -113,7 +113,8 @@ class _CompanyDetailBottomSheetState extends State<CompanyDetailBottomSheet> {
             ),
             Positioned(
                 left: MediaQuery.of(context).size.width / 10,
-                top: -4,
+                top: -40,
+                //MediaQuery.of(context).size.height*0.01,
                 child: Card(elevation: 0,color: Colors.white,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                   child: Padding(
@@ -128,33 +129,3 @@ class _CompanyDetailBottomSheetState extends State<CompanyDetailBottomSheet> {
           ])));
 }
 
-class HalfCirclePainter extends CustomPainter {
-  final Color color;
-  final double radius;
-
-  HalfCirclePainter({required this.color, this.radius = 400.0});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.fill;
-
-    final path = Path();
-    path.moveTo(radius, size.height);
-    path.lineTo(-100, 40);
-    path.lineTo(0, 200);
-    path.arcToPoint(
-      Offset(radius, 50),
-      radius: const Radius.circular(10),
-      clockwise: true,
-    );
-    path.close();
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) =>
-      color != Colors.blue || radius != 30;
-}
